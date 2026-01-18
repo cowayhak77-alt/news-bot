@@ -6,7 +6,7 @@ import time
 import random
 from datetime import datetime
 # 수집 대상 사이트 설정 (필요에 따라 추가/수정 가능)
-# 수집 대상 사이트 설정 (특별시, 광역시, 도청, 서울 구청 포함)
+# 수집 대상 사이트 설정 (특별시, 광역시, 도청, 서울 구청 및 여행/관광 사이트 포함)
 TARGET_SITES = [
     # 특별시 및 광역시
     {"name": "서울특별시청", "url": "https://www.seoul.go.kr/news/news_report.do"},
@@ -54,9 +54,29 @@ TARGET_SITES = [
     {"name": "서초구청", "url": "https://www.seocho.go.kr/site/seocho/ex/bbs/List.do?cbIdx=243"},
     {"name": "강남구청", "url": "https://www.gangnam.go.kr/board/B_000001/list.do?menuNo=GS040101"},
     {"name": "송파구청", "url": "https://www.songpa.go.kr/www/selectBbsNttList.do?bbsNo=7&key=2775"},
-    {"name": "강동구청", "url": "https://www.gangdong.go.kr/web/newportal/press/list"}
-]
+    {"name": "강동구청", "url": "https://www.gangdong.go.kr/web/newportal/press/list"},
 
+    # 여행 및 관광 사이트 (한국관광공사, 지자체 관광공사 등)
+    {"name": "대한민국 구석구석 (한국관광공사)", "url": "https://korean.visitkorea.or.kr"},
+    {"name": "비짓서울 (서울관광재단)", "url": "https://www.visitseoul.net"},
+    {"name": "비짓제주 (제주관광공사)", "url": "https://www.visitjeju.net"},
+    {"name": "경기관광공사", "url": "https://ggtour.or.kr"},
+    {"name": "강원관광", "url": "https://www.gangwon.to"},
+    {"name": "외교부 해외안전여행", "url": "https://www.0404.go.kr"},
+    {"name": "관광지식정보시스템", "url": "https://www.tour.go.kr"},
+    {"name": "한국관광공사 뉴스룸", "url": "https://kto.visitkorea.or.kr"},
+
+    # 여행 전문 매체
+    {"name": "트래비 (Travie)", "url": "https://www.travie.com"},
+    {"name": "에이비로드 (AB-ROAD)", "url": "http://www.abroad.co.kr"},
+    {"name": "뚜르드몽드 (Tour de Monde)", "url": "http://www.tourdemonde.com"},
+    {"name": "론리플래닛 매거진 코리아", "url": "http://lpmagazine.co.kr"},
+    {"name": "바앤다이닝 (Bar & Dining)", "url": "http://www.barndining.com"},
+    {"name": "더 트래블러 (The Traveller)", "url": "http://www.thetravellermagazine.co.kr"},
+    {"name": "여행신문", "url": "https://www.traveltimes.co.kr"},
+    {"name": "뉴스트래블", "url": "https://newstravel.co.kr"},
+    {"name": "여행정보신문", "url": "http://travelinfo.co.kr"}
+]
 
 
 class IntegratedNewsEngine:
@@ -65,8 +85,9 @@ class IntegratedNewsEngine:
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         ]
-        # 돈이 되는 키워드 리스트
-        self.money_keywords = ["보도", "자료", "공고", "지원", "사업", "모집", "선정", "예산", "투자", "육성", "혜택", "보조금"]
+        # 돈이 되는 + 여행 관련 키워드 리스트
+        self.money_keywords = ["보도", "자료", "공고", "지원", "사업", "모집", "선정", "예산", "투자", "육성", "혜택", "보조금", "여행", "관광", "추천", "이벤트", "축제", "안전"]
+
         self.table_patterns = [
             "table.board-list", "table.list_table", "table.bbs_list", 
             "table.tbl_board", "table.tstyle_list", ".board_list table",
