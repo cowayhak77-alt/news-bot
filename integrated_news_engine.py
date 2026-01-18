@@ -5,7 +5,15 @@ from urllib.parse import urljoin
 import time
 import random
 from datetime import datetime
-from target_sites import TARGET_SITES
+# 수집 대상 사이트 설정 (필요에 따라 추가/수정 가능)
+TARGET_SITES = [
+    {"name": "고용노동부", "url": "https://www.moel.go.kr/news/enews/report/enewsList.do"},
+    {"name": "중소벤처기업부", "url": "https://www.mss.go.kr/site/smba/ex/bbs/List.do?cbIdx=248"},
+    {"name": "서울시청", "url": "https://www.seoul.go.kr/news/news_report.do"},
+    {"name": "경기도청", "url": "https://www.gg.go.kr/bbs/board.do?bsIdx=469&menuId=1536"},
+    {"name": "산업통상자원부", "url": "https://www.motie.go.kr/motie/ne/presse/press.jsp"}
+]
+
 
 class IntegratedNewsEngine:
     def __init__(self):
