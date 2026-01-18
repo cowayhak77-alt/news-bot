@@ -1,0 +1,42 @@
+name: Tourism News Bot (Daily 11:00 AM)
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 11:00 AM KST (UTC+9)
+  workflow_dispatch:      # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Tourism News Bot
+      run: python daily_tourism_bot.py
+
+    - name: Send mail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: "🇰🇷 [관광 뉴스] 전국의 최신 관광 소식이 도착했습니다"
+        to: ${{ secrets.MAIL_RECEIVER }}
+        from: Tourism News Bot
+        body: |
+          전국의 관광/여행 할인 및 참여 소식을 전해드립니다.
+          첨부된 HTML 리포트에서 강조된 키워드를 확인해 보세요.
+        attachments: daily_news_report.html
