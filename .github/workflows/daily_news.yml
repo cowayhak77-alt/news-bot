@@ -26,8 +26,19 @@ jobs:
     - name: Run News Bot
       run: python integrated_news_engine.py
 
-    - name: Upload Report
-      uses: actions/upload-artifact@v4
+    - name: Send mail
+      uses: dawidd6/action-send-mail@v3
       with:
-        name: daily-news-report
-        path: daily_news_report.txt
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: "[Daily News Bot] 오늘자 수집 리포트"
+        to: ${{ secrets.MAIL_RECEIVER }}
+        from: News Bot
+        body: |
+          오늘자 뉴스가 수집되었습니다. 
+          첨부된 리포트 파일을 확인해 주세요.
+        attachments: daily_news_report.txt
+
+
